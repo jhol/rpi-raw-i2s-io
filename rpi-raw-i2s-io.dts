@@ -1,0 +1,34 @@
+// Definitions for Rasperry Pi Raw I2S I/O Virtual Codec overlay
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2835";
+
+	fragment@0 {
+		target = <&i2s>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@1 {
+		target-path = "/";
+		__overlay__ {
+			rpi-raw-i2s-codec {
+				#sound-dai-cells = <0>;
+				compatible = "rpi,rpi-raw-i2s-codec";
+				status = "okay";
+			};
+		};
+	};
+
+	fragment@2 {
+		target = <&sound>;
+		__overlay__ {
+			compatible = "rpi,rpi-simple-soundcard-mod";
+			i2s-controller = <&i2s>;
+			status = "okay";
+		};
+	};
+};
